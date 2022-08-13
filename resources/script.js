@@ -46,15 +46,15 @@ function result(playerChoice,computerChoice){
     // intricate type advantage systems.
     //
     // actually scrap that let's just do this conditionally it's easier
-    switch (playerChoice) {
-        case 0: // rock
-            break;
-        case 1: // paper
-            break;
-        case 2: // scissors
-            break;
-    }
-    
+    // and let's just make this function return the win/loss string.
+    //
+    // nope we're determining it numerically
+    // and actually in order to accommodate for making the tie retry doable
+    // I have to limit this function to outputting the numerical result.
+
+    return (choices.length + playerChoice - computerChoice) % choices.length;
+    // this will return a 1 for a win, a 2 for a loss, and anything else
+    // will be a tie.
 }
 
 function gameRound(){
@@ -64,5 +64,5 @@ function gameRound(){
     let computerChoice = getComputerChoice();
     alert(`The computer played ${choices[computerChoice]}.`);
 
-    
+    alert(result(playerChoice,computerChoice));
 }
