@@ -1,8 +1,15 @@
 const choices = ["rock","paper","scissors"];
 
+alert("Start!");
 gameRound();
+alert("GAME OVER");
 
-
+function capitalize(scr){
+    let newScr = [scr.slice(0,1),scr.slice(1)];
+    newScr[0] = newScr[0].toUpperCase();
+    newScr[1] = newScr[1].toLowerCase();
+    return (newScr[0] || "") + (newScr[1] || "");
+}
 
 function getComputerChoice() {
     return Math.floor(Math.random()*choices.length);  
@@ -58,11 +65,38 @@ function result(playerChoice,computerChoice){
 }
 
 function gameRound(){
-    alert("Start!");
+    
     let playerChoice = getPlayerChoice();
     alert(`You played ${choices[playerChoice]}.`);
     let computerChoice = getComputerChoice();
     alert(`The computer played ${choices[computerChoice]}.`);
 
-    alert(result(playerChoice,computerChoice));
+    let roundResult = result(playerChoice,computerChoice);
+    switch(roundResult){
+        case 2: {
+            alert("You lose! " + 
+                   capitalize(choices[computerChoice]) + 
+                   " beats " + 
+                   choices[playerChoice] + 
+                   ".");
+            break;
+        }
+        case 1: {
+            alert("You win! " + 
+                   capitalize(choices[playerChoice]) + 
+                   " beats " + 
+                   choices[computerChoice] + 
+                   ".");
+            break;
+        }
+        default: {
+            alert("You tied!");
+            alert("Get ready for the next round!");
+            gameRound();
+        }
+    }
+    if(confirm("Want to play again?"))
+    {
+        gameRound();
+    }
 }
