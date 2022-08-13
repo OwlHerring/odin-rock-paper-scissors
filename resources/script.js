@@ -38,8 +38,10 @@ function getPlayerChoice() {
 function convertChoiceToArray(answer){
     // This should take the (player's) choice in script form and return the array object, case-insensitively.
     // For now let's just keep it case-sensitive.
+    //
+    // Oh wait, converting to lower case is pretty easy actually.
     for(let i = 0; i < choices.length; i++){
-        if(choices[i] === answer){
+        if(choices[i] === answer.toLowerCase()){
             return i;
         }
     }
