@@ -1,4 +1,5 @@
 const choices = ["rock","paper","scissors"];
+                // ["fire", "earth", "water", "grass" ]
 
 alert("Start!");
 gameRound();
