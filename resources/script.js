@@ -26,8 +26,14 @@ function getPlayerChoice() {
 }
 function convertChoiceToArray(answer){
     // This should take the choice in script form and return the array object, case-insensitively.
-    // For now it only returns "rock".
-    return 0;
+    // For now let's just keep it case-sensitive.
+    for(let i = 0; i < choices.length; i++){
+        if(choices[i] === answer){
+            return i;
+        }
+    }
+    // error state
+    return -1;
 }
 
 function gameRound(playerChoice,computerChoice){
