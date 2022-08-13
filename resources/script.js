@@ -1,8 +1,7 @@
 const choices = ["rock","paper","scissors"];
 
 function getComputerChoice() {
-    const c = Math.floor(Math.random()*3);    
-    return choices[c];
+    return Math.floor(Math.random()*choices.length);  
 }
 function getPlayerChoice() {
     let myPrompt = "What will you play? Rock? Paper? or Scissors?";
@@ -40,6 +39,8 @@ function gameRound(){
     alert("Start!");
     let playerChoice = getPlayerChoice();
     alert(`You played ${choices[playerChoice]}.`);
+    let computerChoice = getComputerChoice();
+    alert(`The computer played ${choices[computerChoice]}.`);
 
 }
 
