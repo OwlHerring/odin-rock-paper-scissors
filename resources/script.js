@@ -14,19 +14,20 @@ function getPlayerChoice() {
         // I'll put something here to break the flow if a is escape or something.
         c = convertChoiceToArray(a); 
         // the plan is to make it so convertChoiceToArray returns something falsy to c if the answer is wrong.
-        if(c){
+        if(c+1){ // because I want it to return true if c === 0
             stillUndecided = false;
         }
         else {
             myPrompt = "Please enter 'rock', 'paper', or 'scissors'.";
         }
     }
+    return c;
     
 }
 function convertChoiceToArray(answer){
     // This should take the choice in script form and return the array object, case-insensitively.
     // For now it only returns "rock".
-    return "rock";
+    return 0;
 }
 
 function gameRound(playerChoice,computerChoice){
