@@ -36,10 +36,11 @@ function convertChoiceToArray(answer){
     return -1;
 }
 
-function gameRound(playerChoice,computerChoice){
-    console.log("Start!");
-    let c = getPlayerChoice();
-    console.log(`You played ${choices[c]}.`);
+function gameRound(){
+    alert("Start!");
+    let playerChoice = getPlayerChoice();
+    alert(`You played ${choices[playerChoice]}.`);
+
 }
 
 gameRound();
