@@ -1,5 +1,9 @@
 const choices = ["rock","paper","scissors"];
 
+gameRound();
+
+
+
 function getComputerChoice() {
     return Math.floor(Math.random()*choices.length);  
 }
@@ -24,7 +28,7 @@ function getPlayerChoice() {
     
 }
 function convertChoiceToArray(answer){
-    // This should take the choice in script form and return the array object, case-insensitively.
+    // This should take the (player's) choice in script form and return the array object, case-insensitively.
     // For now let's just keep it case-sensitive.
     for(let i = 0; i < choices.length; i++){
         if(choices[i] === answer){
@@ -35,6 +39,24 @@ function convertChoiceToArray(answer){
     return -1;
 }
 
+function result(playerChoice,computerChoice){
+    // this should return 0 for a loss, 1 for a win and 2 for a tie.
+    // At the moment this will be determined numerically, but
+    // I'm sure some contraption can be worked out for more 
+    // intricate type advantage systems.
+    //
+    // actually scrap that let's just do this conditionally it's easier
+    switch (playerChoice) {
+        case 0: // rock
+            break;
+        case 1: // paper
+            break;
+        case 2: // scissors
+            break;
+    }
+    
+}
+
 function gameRound(){
     alert("Start!");
     let playerChoice = getPlayerChoice();
@@ -42,7 +64,5 @@ function gameRound(){
     let computerChoice = getComputerChoice();
     alert(`The computer played ${choices[computerChoice]}.`);
 
+    
 }
-
-gameRound();
-
