@@ -11,14 +11,28 @@ for(let i = 0; i < choices.length; i++){
     myButtons[i].textContent = capitalize(choices[i]);
     myButtons[i].classList.add(`choice`, `${choices[i]}`);
     buttonCont.appendChild(myButtons[i]);
+
+    myButtons[i].disabled = true;
+
+    myButtons[i].addEventListener('click', () => {
+        alert(`You pressed ${choices[i]}.`);
+    });
 }
 // this is where I'll put the game text.
 const gameText = document.body.querySelector('.game-text');
 
 
-alert("Start!");
-gameRound();
-alert("GAME OVER");
+// this is where I'll put the start game button.
+const startButton = document.body.querySelector('.start');
+startButton.addEventListener('click', () => {
+    alert("Start!");
+    gameRound();
+    alert("GAME OVER");
+})
+
+
+
+
 
 // this is used to automatically convert strings from tHIs to This.
 function capitalize(scr){ 

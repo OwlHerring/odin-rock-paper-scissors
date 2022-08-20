@@ -4,6 +4,8 @@
 
 .container .game-text{
     text-align: center;
+
+    transition: 0.5s;
 }
 
 .button-container {
