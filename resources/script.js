@@ -153,38 +153,40 @@ function result(playerChoice,computerChoice){
 // Honestly, it might as well be a separate program entirely
 
 function printGameText(string){
-    gameText.textContent = string;
-    setTimeout(1000);
+    gameText.innerHTML = string;
+    
 }
 
 // gameRound will be initialized by clicking on a button for player input.
 function gameRound(playerChoice){
     
-    printGameText(`You played ${choices[playerChoice]}.`);
     let computerChoice = getComputerChoice();
-    printGameText(`The computer played ${choices[computerChoice]}.`);
-
     let roundResult = result(playerChoice,computerChoice);
+
+    let roundGameText = "";
+    roundGameText += `You played ${choices[playerChoice]}.<br>The computer played ${choices[computerChoice]}.<br>`
+
     switch(roundResult){
         case 2: {
-            printGameText("You lose! " + 
+            roundGameText += "You lose!<br>" + 
                    capitalize(choices[computerChoice]) + 
                    " beats " + 
                    choices[playerChoice] + 
-                   ".");
+                   ".";
             break;
         }
         case 1: {
-            printGameText("You win! " + 
+            roundGameText += "You win! " + 
                    capitalize(choices[playerChoice]) + 
                    " beats " + 
                    choices[computerChoice] + 
-                   ".");
+                   ".";
             break;
         }
         default: {
-            printGameText("You tied!");
+            roundGameText += "You tied!";
         }
     }
+    printGameText(roundGameText);
     alert("GAME OVER");
 }
