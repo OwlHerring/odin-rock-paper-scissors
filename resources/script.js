@@ -1,5 +1,5 @@
-const choices = //["rock","paper","scissors"];
-                 ["fire", "earth", "water", "grass" ]
+const choices = ["rock","paper","scissors"];
+                //["fire", "earth", "water", "grass" ]
 
 // here is where I'll put the DOM elements. 
 // It's after the choices array so I can generate buttons based on it.
