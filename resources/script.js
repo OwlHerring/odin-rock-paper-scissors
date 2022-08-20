@@ -4,10 +4,17 @@ const choices = ["rock","paper","scissors"];
 // here is where I'll put the DOM elements. 
 // It's after the choices array so I can generate buttons based on it.
 
-let roundCount = 0;
+let playerPoint = 0;
+let computerPoint = 0;
+const pointCap = 5;
 
 const buttonCont = document.body.querySelector('.button-container');
 let myButtons = [];
+
+// this is the text that pops up at the start of each round.
+// It's expedient to set it up here with everything else that depends on 
+// the array of buttons/choices.
+let initialText = `What will you play? ${capitalize(choices[0])}`;
 for(let i = 0; i < choices.length; i++){
     myButtons[i] = document.createElement('button');
     myButtons[i].textContent = capitalize(choices[i]);
@@ -20,7 +27,15 @@ for(let i = 0; i < choices.length; i++){
     myButtons[i].addEventListener('click', () => {
         endRound(Number(myButtons[i].id));
     });
+
+    if(i > 0 && i < choices.length - 1){
+        initialText += `, ${choices[i]}`;
+    } else if(i === choices.length - 1){
+        initialText += ` or ${choices[i]}?`;
+    }
 }
+
+
 // this is where I'll put the game text.
 const gameText = document.body.querySelector('.game-text');
 
@@ -92,7 +107,9 @@ function endRound(playerChoice){
                    capitalize(choices[computerChoice]) + 
                    " beats " + 
                    choices[playerChoice] + 
-                   ".";
+                   ".<br><br>";
+            
+            computerPoint++;
             break;
         }
         case 1: {
@@ -100,32 +117,51 @@ function endRound(playerChoice){
                    capitalize(choices[playerChoice]) + 
                    " beats " + 
                    choices[computerChoice] + 
-                   ".";
+                   ".<br><br>";
+
+            playerPoint++;
             break;
         }
         default: {
-            roundGameText += "You tied!";
+            roundGameText += "You tied!<br><br>";
         }
     }
-    printGameText(roundGameText);
+
+    if(playerPoint < pointCap && computerPoint < pointCap){
+        roundGameText += `You have ${playerPoint} points. The computer has ${computerPoint} points.<br>`
+        roundGameText += `${initialText}`;
+    }
+    else{ // This is the only place I can figure putting the end of gameSet will even work
+        if(playerPoint >= pointCap){
+            roundGameText += `You reached ${pointCap} points.<br>You've won!`;
+            
+        } else{
+            roundGameText += `The computed reached ${pointCap} points.<br>Better luck next time!`
+        }
+        
+        startButton.disabled = false;
+        for(let i=0; i<myButtons.length; i++){
+            myButtons[i].disabled = true;
+        }
+        playerPoint = 0;
+        computerPoint = 0;
+    }
+
+    printGameText(roundGameText);    
+
 }
 
 // this function should start once startButton is pressed,
 // run for x rounds and then reenable startButton once all
 // rounds are over.
 function gameSet() { 
-    roundCount = 0;
+    playerCount = 0;
+    computerCount = 0;
 
-    let initialText = `What will you play? ${capitalize(choices[0])}`;
-    for(let i = 0; i < myButtons.length; i++){
-        myButtons[i].disabled = false;
-        if(i > 0 && i < myButtons.length - 1){
-            initialText += `, ${choices[i]}`;
-        } else if(i === myButtons.length - 1){
-            initialText += ` or ${choices[i]}?`;
-        }
-    }
     printGameText(initialText);
+    for(let i=0; i<choices.length; i++){
+        myButtons[i].disabled = false;
+    }
 
     alert("Start!");
     startButton.disabled = true;
