@@ -4,6 +4,8 @@ const choices = ["rock","paper","scissors"];
 // here is where I'll put the DOM elements. 
 // It's after the choices array so I can generate buttons based on it.
 
+let roundCount = 0;
+
 const buttonCont = document.body.querySelector('.button-container');
 let myButtons = [];
 for(let i = 0; i < choices.length; i++){
@@ -16,7 +18,7 @@ for(let i = 0; i < choices.length; i++){
     myButtons[i].disabled = true;
 
     myButtons[i].addEventListener('click', () => {
-        gameRound(Number(myButtons[i].id));
+        endRound(Number(myButtons[i].id));
     });
 }
 // this is where I'll put the game text.
@@ -25,19 +27,7 @@ const gameText = document.body.querySelector('.game-text');
 
 // this is where I'll put the start game button.
 const startButton = document.body.querySelector('.start');
-startButton.addEventListener('click', () => {
-    alert("Start!");
-    let initialText = `What will you play? ${capitalize(choices[0])}`;
-    for(let i = 0; i < myButtons.length; i++){
-        myButtons[i].disabled = false;
-        if(i > 0 && i < myButtons.length - 1){
-            initialText += `, ${choices[i]}`;
-        } else if(i === myButtons.length - 1){
-            initialText += ` or ${choices[i]}?`;
-        }
-    }
-    printGameText(initialText);
-})
+startButton.addEventListener('click', gameSet);
 
 
 
@@ -51,85 +41,9 @@ function capitalize(scr){
     return (newScr[0] || "") + (newScr[1] || "");
 }
 
-function gameRound(){
-    
-    let playerChoice = getPlayerChoice();
-    alert(`You played ${choices[playerChoice]}.`);
-    let computerChoice = getComputerChoice();
-    alert(`The computer played ${choices[computerChoice]}.`);
-
-    let roundResult = result(playerChoice,computerChoice);
-    switch(roundResult){
-        case 2: {
-            alert("You lose! " + 
-                   capitalize(choices[computerChoice]) + 
-                   " beats " + 
-                   choices[playerChoice] + 
-                   ".");
-            break;
-        }
-        case 1: {
-            alert("You win! " + 
-                   capitalize(choices[playerChoice]) + 
-                   " beats " + 
-                   choices[computerChoice] + 
-                   ".");
-            break;
-        }
-        default: {
-            alert("You tied!");
-            alert("Get ready for the next round!");
-            gameRound();
-            return;
-        }
-    }
-    if(confirm("Want to play again?"))
-    {
-        gameRound();
-        return;
-    }
-}
-
 // this just generates a random number to refer to the members of the choices array.
 function getComputerChoice() {
     return Math.floor(Math.random()*choices.length);  
-}
-
-// this is the part where the player's choice among the choices array is decided.
-function getPlayerChoice() {
-    let myPrompt = "What will you play? Rock? Paper? or Scissors?";
-    let stillUndecided = true;
-    let c; let a; // c: choice; a: answer
-
-    while(stillUndecided){
-        gameText.textContent = myPrompt;
-
-        a = prompt(myPrompt); 
-        // I'll put something here to break the flow if a is escape or something.
-        c = convertChoiceToArray(a); 
-        // the plan is to make it so convertChoiceToArray returns something falsy to c if the answer is wrong.
-        if(c+1){ // because I want it to return true if c === 0
-            stillUndecided = false;
-        }
-        else {
-            myPrompt = "Please enter 'rock', 'paper', or 'scissors'.";
-        }
-    }
-    return c;
-    
-}
-// this is the part of the code, used in getPlayerChoice(), where the player's 
-// answer as inputted by prompt is converted from string to array number.
-function convertChoiceToArray(answer){
-    // This should take the (player's) choice in script form and return the array object, case-insensitively.
-
-    for(let i = 0; i < choices.length; i++){
-        if(choices[i] === answer.toLowerCase()){
-            return i;
-        }
-    }
-    // error state
-    return -1;
 }
 
 function result(playerChoice,computerChoice){
@@ -163,8 +77,8 @@ function printGameText(string){
     
 }
 
-// gameRound will be initialized by clicking on a button for player input.
-function gameRound(playerChoice){
+// endRound will be initialized by clicking on a button for player input.
+function endRound(playerChoice){
     
     let computerChoice = getComputerChoice();
     let roundResult = result(playerChoice,computerChoice);
@@ -194,4 +108,25 @@ function gameRound(playerChoice){
         }
     }
     printGameText(roundGameText);
+}
+
+// this function should start once startButton is pressed,
+// run for x rounds and then reenable startButton once all
+// rounds are over.
+function gameSet() { 
+    roundCount = 0;
+
+    let initialText = `What will you play? ${capitalize(choices[0])}`;
+    for(let i = 0; i < myButtons.length; i++){
+        myButtons[i].disabled = false;
+        if(i > 0 && i < myButtons.length - 1){
+            initialText += `, ${choices[i]}`;
+        } else if(i === myButtons.length - 1){
+            initialText += ` or ${choices[i]}?`;
+        }
+    }
+    printGameText(initialText);
+
+    alert("Start!");
+    startButton.disabled = true;
 }
