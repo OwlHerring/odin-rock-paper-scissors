@@ -9,6 +9,7 @@ let myButtons = [];
 for(let i = 0; i < choices.length; i++){
     myButtons[i] = document.createElement('button');
     myButtons[i].textContent = capitalize(choices[i]);
+    myButtons[i].classList.add(`choice`, `${choices[i]}`);
     divCont.appendChild(myButtons[i]);
 }
 
