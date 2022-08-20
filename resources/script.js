@@ -1,7 +1,17 @@
-// here is where I'll put the DOM elements.
-
 const choices = ["rock","paper","scissors"];
                 // ["fire", "earth", "water", "grass" ]
+
+// here is where I'll put the DOM elements. 
+// It's after the choices array so I can generate buttons based on it.
+
+const divCont = document.querySelector('.container');
+let myButtons = [];
+for(let i = 0; i < choices.length; i++){
+    myButtons[i] = document.createElement('button');
+    myButtons[i].textContent = capitalize(choices[i]);
+    divCont.appendChild(myButtons[i]);
+}
+
 
 alert("Start!");
 gameRound();
