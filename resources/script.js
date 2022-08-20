@@ -1,5 +1,5 @@
-const choices = ["rock","paper","scissors"];
-                // ["fire", "earth", "water", "grass" ]
+const choices = //["rock","paper","scissors"];
+                 ["fire", "earth", "water", "grass" ]
 
 // here is where I'll put the DOM elements. 
 // It's after the choices array so I can generate buttons based on it.
@@ -143,8 +143,6 @@ function endRound(playerChoice){
         for(let i=0; i<myButtons.length; i++){
             myButtons[i].disabled = true;
         }
-        playerPoint = 0;
-        computerPoint = 0;
     }
 
     printGameText(roundGameText);    
@@ -154,9 +152,10 @@ function endRound(playerChoice){
 // this function should start once startButton is pressed,
 // run for x rounds and then reenable startButton once all
 // rounds are over.
+// Never mind, all it does is start the set.
 function gameSet() { 
-    playerCount = 0;
-    computerCount = 0;
+    playerPoint = 0;
+    computerPoint = 0;
 
     printGameText(initialText);
     for(let i=0; i<choices.length; i++){
