@@ -9,13 +9,15 @@ let myButtons = [];
 for(let i = 0; i < choices.length; i++){
     myButtons[i] = document.createElement('button');
     myButtons[i].textContent = capitalize(choices[i]);
-    myButtons[i].classList.add(`choice`, `${choices[i]}`);
+    myButtons[i].classList.add(`choice`);
+    myButtons[i].setAttribute('id', `${i}`);
     buttonCont.appendChild(myButtons[i]);
 
-    myButtons[i].disabled = true;
+    //myButtons[i].disabled = true;
 
     myButtons[i].addEventListener('click', () => {
         alert(`You pressed ${choices[i]}.`);
+        alert(myButtons[i].id);
     });
 }
 // this is where I'll put the game text.
@@ -27,7 +29,6 @@ const startButton = document.body.querySelector('.start');
 startButton.addEventListener('click', () => {
     alert("Start!");
     gameRound();
-    alert("GAME OVER");
 })
 
 
@@ -71,11 +72,13 @@ function gameRound(){
             alert("You tied!");
             alert("Get ready for the next round!");
             gameRound();
+            return;
         }
     }
     if(confirm("Want to play again?"))
     {
         gameRound();
+        return;
     }
 }
 
@@ -91,6 +94,8 @@ function getPlayerChoice() {
     let c; let a; // c: choice; a: answer
 
     while(stillUndecided){
+        gameText.textContent = myPrompt;
+
         a = prompt(myPrompt); 
         // I'll put something here to break the flow if a is escape or something.
         c = convertChoiceToArray(a); 
@@ -135,4 +140,52 @@ function result(playerChoice,computerChoice){
     return (choices.length + playerChoice - computerChoice) % choices.length;
     // this will return a 1 for a win, a 2 for a loss, and anything else
     // will be a tie.
+}
+
+//
+//
+//
+//
+////////////////
+// A set of entirely new functions for the purpose of this new button-based input.
+// Honestly, it might as well be a separate program entirely
+
+// gameRound will be initialized by clicking on a button for player input.
+function gameRound(playerChoice){
+    
+    alert(`You played ${choices[playerChoice]}.`);
+    let computerChoice = getComputerChoice();
+    alert(`The computer played ${choices[computerChoice]}.`);
+
+    let roundResult = result(playerChoice,computerChoice);
+    switch(roundResult){
+        case 2: {
+            alert("You lose! " + 
+                   capitalize(choices[computerChoice]) + 
+                   " beats " + 
+                   choices[playerChoice] + 
+                   ".");
+            break;
+        }
+        case 1: {
+            alert("You win! " + 
+                   capitalize(choices[playerChoice]) + 
+                   " beats " + 
+                   choices[computerChoice] + 
+                   ".");
+            break;
+        }
+        default: {
+            alert("You tied!");
+            alert("Get ready for the next round!");
+            gameRound();
+            return;
+        }
+    }
+    if(confirm("Want to play again?"))
+    {
+        gameRound();
+        return;
+    }
+    alert("GAME OVER");
 }
