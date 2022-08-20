@@ -16,7 +16,6 @@ for(let i = 0; i < choices.length; i++){
     myButtons[i].disabled = true;
 
     myButtons[i].addEventListener('click', () => {
-        alert(`You pressed ${choices[i]}.`);
         gameRound(Number(myButtons[i].id));
     });
 }
@@ -28,9 +27,16 @@ const gameText = document.body.querySelector('.game-text');
 const startButton = document.body.querySelector('.start');
 startButton.addEventListener('click', () => {
     alert("Start!");
+    let initialText = `What will you play? ${capitalize(choices[0])}`;
     for(let i = 0; i < myButtons.length; i++){
         myButtons[i].disabled = false;
+        if(i > 0 && i < myButtons.length - 1){
+            initialText += `, ${choices[i]}`;
+        } else if(i === myButtons.length - 1){
+            initialText += ` or ${choices[i]}?`;
+        }
     }
+    printGameText(initialText);
 })
 
 
@@ -176,7 +182,7 @@ function gameRound(playerChoice){
             break;
         }
         case 1: {
-            roundGameText += "You win! " + 
+            roundGameText += "You win!<br>" + 
                    capitalize(choices[playerChoice]) + 
                    " beats " + 
                    choices[computerChoice] + 
@@ -188,5 +194,4 @@ function gameRound(playerChoice){
         }
     }
     printGameText(roundGameText);
-    alert("GAME OVER");
 }
