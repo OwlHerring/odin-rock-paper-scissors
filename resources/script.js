@@ -13,11 +13,11 @@ for(let i = 0; i < choices.length; i++){
     myButtons[i].setAttribute('id', `${i}`);
     buttonCont.appendChild(myButtons[i]);
 
-    //myButtons[i].disabled = true;
+    myButtons[i].disabled = true;
 
     myButtons[i].addEventListener('click', () => {
         alert(`You pressed ${choices[i]}.`);
-        alert(myButtons[i].id);
+        gameRound(Number(myButtons[i].id));
     });
 }
 // this is where I'll put the game text.
@@ -28,7 +28,9 @@ const gameText = document.body.querySelector('.game-text');
 const startButton = document.body.querySelector('.start');
 startButton.addEventListener('click', () => {
     alert("Start!");
-    gameRound();
+    for(let i = 0; i < myButtons.length; i++){
+        myButtons[i].disabled = false;
+    }
 })
 
 
@@ -150,17 +152,22 @@ function result(playerChoice,computerChoice){
 // A set of entirely new functions for the purpose of this new button-based input.
 // Honestly, it might as well be a separate program entirely
 
+function printGameText(string){
+    gameText.textContent = string;
+    setTimeout(1000);
+}
+
 // gameRound will be initialized by clicking on a button for player input.
 function gameRound(playerChoice){
     
-    alert(`You played ${choices[playerChoice]}.`);
+    printGameText(`You played ${choices[playerChoice]}.`);
     let computerChoice = getComputerChoice();
-    alert(`The computer played ${choices[computerChoice]}.`);
+    printGameText(`The computer played ${choices[computerChoice]}.`);
 
     let roundResult = result(playerChoice,computerChoice);
     switch(roundResult){
         case 2: {
-            alert("You lose! " + 
+            printGameText("You lose! " + 
                    capitalize(choices[computerChoice]) + 
                    " beats " + 
                    choices[playerChoice] + 
@@ -168,7 +175,7 @@ function gameRound(playerChoice){
             break;
         }
         case 1: {
-            alert("You win! " + 
+            printGameText("You win! " + 
                    capitalize(choices[playerChoice]) + 
                    " beats " + 
                    choices[computerChoice] + 
@@ -176,16 +183,8 @@ function gameRound(playerChoice){
             break;
         }
         default: {
-            alert("You tied!");
-            alert("Get ready for the next round!");
-            gameRound();
-            return;
+            printGameText("You tied!");
         }
-    }
-    if(confirm("Want to play again?"))
-    {
-        gameRound();
-        return;
     }
     alert("GAME OVER");
 }
